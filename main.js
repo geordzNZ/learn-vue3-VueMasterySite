@@ -4,7 +4,11 @@ const app = Vue.createApp({
       prodName: 'Socks',
       prodDesc: 'Thing to keep your feet warm',
       prodImg: './assets/images/socks_green.jpg',
-      prodURL: 'https://github.com/geordzNZ'
+      prodURL: 'https://github.com/geordzNZ',
+      prodInStock: true,
+      prodOOS: false,
+      prodInv: 100,
+      prodOnSale: false
     }
   }
 });
