@@ -22,16 +22,23 @@
             </a>
           </div>
           <div class="product-info">
-            <p v-show="prodOnSale">ON SALE</p>
+            
             <h1>{{prodName}}</h1>
             <!-- <p v-if="prodInStock">In Stock</p>
-            <p v-else>Out of Stock</p> -->
-            <!-- <p v-if="prodOOS">Out of Stock</p> -->
-            <!-- <p v-show="prodOOS">Out of Stock</p> -->
-            <p v-if="prodInv > 10">Lots in Stock</p>
-            <p v-else-if="prodInv <=10 && prodInv > 0">Low Stock warning</p>
-            <p v-else>Out of Stock - sorry</p>
-          </div>
+              <p v-else>Out of Stock</p> -->
+              <!-- <p v-if="prodOOS">Out of Stock</p> -->
+              <!-- <p v-show="prodOOS">Out of Stock</p> -->
+              <p v-if="prodInv > 10">Lots in Stock</p>
+              <p v-else-if="prodInv <=10 && prodInv > 0">Low Stock warning</p>
+              <p v-else>Out of Stock - sorry</p>
+              <p v-show="prodOnSale">ON SALE</p>
+              <ul id="details">
+                <li v-for="detail in prodDetails">{{ detail }}</li>
+              </ul>
+              <div v-for="variant in prodVariants" :key="variant.id">{{ variant.colour }}</div>
+              <ul id="sizes">
+                <li v-for="size in prodSizes">{{size}}</li>
+              </ul>
         </div>
       </div>
     </div>
