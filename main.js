@@ -1,8 +1,10 @@
 const app = Vue.createApp({
   data() {
     return {
-      product: 'Socks',
-      description: 'Thing to keep your feet warm'
+      prodName: 'Socks',
+      prodDesc: 'Thing to keep your feet warm',
+      prodImg: './assets/images/socks_green.jpg',
+      prodURL: 'https://github.com/geordzNZ'
     }
   }
 });
