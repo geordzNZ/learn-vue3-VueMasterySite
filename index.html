@@ -13,6 +13,10 @@
     <div id="app">
       <div class="nav-bar"></div>
 
+
+      <div class="cart">Cart 1 ({{ cart1 }})</div>
+      <div class="cart">Cart 2 ({{ cart2 }})</div>
+
       <div class="product-display">
         <div class="product-container">
           <div class="product-image">
@@ -35,10 +39,14 @@
               <ul id="details">
                 <li v-for="detail in prodDetails">{{ detail }}</li>
               </ul>
-              <div v-for="variant in prodVariants" :key="variant.id">{{ variant.colour }}</div>
+              <div v-for="variant in prodVariants" :key="variant.id" @mouseover="updateImg(variant.imgSrc)">{{ variant.colour }}</div>
               <ul id="sizes">
                 <li v-for="size in prodSizes">{{size}}</li>
               </ul>
+              <button v-on:click="cart1 += 1" class="button">Add to Cart 1</button>
+              <!-- <button v-on:click="btnAddToCart" class="button">Add to Cart 2</button> -->
+              <button @click="btnAddToCart" class="button">Add to Cart 2</button>
+              <button @click="btnResetCart" class="button">Reset Carts</button>
         </div>
       </div>
     </div>
