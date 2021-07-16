@@ -8,29 +8,29 @@ app.component('product-display', {
   template:
   /*html */
   `<div class="product-display">
-  <div class="product-container">
-    <div class="product-image">
-      <!-- <img v-bind:src="image" alt=""> -->
-      <a :href="prodURL" target="_blank"></a>
-        <img :src="prodImg" :alt="prodDesc" :title="prodDesc" :class="{ 'out-of-stock-img': prodOOS }">
+    <div class="product-container">
+      <div class="product-image">
+        <a :href="prodURL" target="_blank">
+          <img :src="prodImg" :alt="prodDesc" :title="prodDesc" :class="{ 'out-of-stock-img': prodOOS }" />
         </a>
+      </div>
+      <div class="product-info">
+        <h1>{{ prodTitle }}</h1>
+          <p v-if="prodInv > 10">Lots in Stock</p>
+          <p v-else-if="prodInv <=10 && prodInv > 0">Low Stock warning</p>
+          <p v-else>Out of Stock - sorry</p>
+          <p v-show="prodOnSale">ON SALE</p>
+          <p>Shipping {{ shipping }}</p>
+          <product-details :details="prodDetails"></product-details>
+          <div v-for="(variant, index) in prodVariants" :key="variant.id" @mouseover="updateVariant(index)" class="color-circle" :style="{ backgroundColor: variant.colour }"></div>
+          <ul id="sizes">
+            <li v-for="size in prodSizes">{{size}}</li>
+          </ul>
+          <button @click="btnAddToCart" class="button" :disabled="prodOOS" :class="{ disabledButton: !prodInv }">Add to Cart</button>
+          <button @click="btnRemoveFromCart" class="button" :disabled="prodOOS" :class="{ disabledButton: !prodInv }">Reomve from Cart</button>
+      </div>
     </div>
-    <div class="product-info">
-      <h1>{{ prodTitle }}</h1>
-        <p v-if="prodInv > 10">Lots in Stock</p>
-        <p v-else-if="prodInv <=10 && prodInv > 0">Low Stock warning</p>
-        <p v-else>Out of Stock - sorry</p>
-        <p v-show="prodOnSale">ON SALE</p>
-        <p>Shipping {{ shipping }}</p>
-        <product-details :details="prodDetails"></product-details>
-        <div v-for="(variant, index) in prodVariants" :key="variant.id" @mouseover="updateVariant(index)" class="color-circle" :style="{ backgroundColor: variant.colour }"></div>
-        <ul id="sizes">
-          <li v-for="size in prodSizes">{{size}}</li>
-        </ul>
-        <button v-on:click="cart += 1" class="button" :disabled="prodOOS" :class="{ disabledButton: !prodInv }">Add to Cart 1</button>
-        <button @click="btnResetCart" class="button">Reset Carts</button>
-  </div>
-</div>`,
+  </div>`,
 data() {
   return {
     prodName: 'Socks',
@@ -39,6 +39,7 @@ data() {
     prodSelectedVariant: 0,
     prodURL: 'https://github.com/geordzNZ',
     prodOnSale: false,
+    prodOOS: false,
     prodDetails: ['50% cotton', '30% wool', '20% polyester'],
     prodVariants: [
       { id: 2234, colour: 'green', imgSrc: './assets/images/socks_green.jpg', qty: 50},
@@ -48,12 +49,9 @@ data() {
   }
 },
 methods: {
-  btnAddToCart() { this.cart2 += 2 },
-  updateVariant(index) { this.prodSelectedVariant = index },
-  btnResetCart() { 
-    this.cart1 = 0
-    this.cart2 = 0
-  }
+  btnAddToCart() { this.$emit('add-to-cart', this.prodVariants[this.prodSelectedVariant].id) },
+  btnRemoveFromCart() { this.$emit('remove-from-cart', this.prodVariants[this.prodSelectedVariant].id) },
+  updateVariant(index) { this.prodSelectedVariant = index }
 },
 computed: {
   prodTitle() {
