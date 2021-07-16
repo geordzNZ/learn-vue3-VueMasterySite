@@ -30,6 +30,8 @@ app.component('product-display', {
           <button @click="btnRemoveFromCart" class="button" :disabled="prodOOS" :class="{ disabledButton: !prodInv }">Reomve from Cart</button>
       </div>
     </div>
+    <review-list v-if="prodReviews.length" :reviews="prodReviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
   </div>`,
 data() {
   return {
@@ -45,13 +47,15 @@ data() {
       { id: 2234, colour: 'green', imgSrc: './assets/images/socks_green.jpg', qty: 50},
       { id: 2235, colour: 'blue', imgSrc: './assets/images/socks_blue.jpg', qty: 0}
     ],
-    prodSizes: ['S','M','L','XL']
+    prodSizes: ['S','M','L','XL'],
+    prodReviews: []
   }
 },
 methods: {
   btnAddToCart() { this.$emit('add-to-cart', this.prodVariants[this.prodSelectedVariant].id) },
   btnRemoveFromCart() { this.$emit('remove-from-cart', this.prodVariants[this.prodSelectedVariant].id) },
-  updateVariant(index) { this.prodSelectedVariant = index }
+  updateVariant(index) { this.prodSelectedVariant = index },
+  addReview(review) { this.prodReviews.push(review) }
 },
 computed: {
   prodTitle() {
